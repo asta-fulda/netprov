@@ -31,7 +31,7 @@
         "/home/fooker/dhcpd.conf": {
             "class": "isc:dhcp",
             
-            "source": "coord:intern",
+            "source": "coord:internal",
             "config": {
                 "authoritative": true,
                 
