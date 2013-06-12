@@ -1,0 +1,55 @@
+{
+    "sources": {
+        "coord:internal": {
+            "class": "phpipam",
+            "config": {
+                "host": "127.0.0.1",
+                "port": 3306,
+                "database": "phpipam",
+                "username": "phpipam",
+                "password": "PASSWORD",
+                
+                "section": "Internal",
+                
+                "fields": {
+                    "dhcp_dns_server": "DNS Server",
+                    "dhcp_dns_domain": "DNS Domain",
+                    "dhcp_dns_search": "DNS Search",
+                    
+                    "dhcp_tftp_server": "TFTP Server",
+                    "dhcp_tftp_file": "TFTP File",
+                    
+                    "dhcp_router": "Default Gateway",
+                    
+                    "dns_domain": "DNS Domain"
+                }
+            }
+        }
+    },
+    
+    "mappings": {
+        "/home/fooker/dhcpd.conf": {
+            "class": "isc:dhcp",
+            
+            "source": "coord:intern",
+            "config": {
+                "authoritative": true,
+                
+                "default-lease-time": 600,
+                "max-lease-time": 7200
+            },
+            
+            "action": "echo /etc/init.d/isc-dhcp force-reload"
+        },
+        "/home/fooker/hosts": {
+            "class": "linux:hosts",
+            
+            "source": "coord:internal",
+            "config": {
+                "localhost": true
+            },
+            
+            "action": "echo /etc/init.d/dnsmasq force-reload"
+        }
+    }
+}

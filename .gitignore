@@ -1,0 +1,9 @@
+.project
+.pydevproject
+
+netprov.egg-info/
+
+**/*.pyc
+
+build/
+dist/

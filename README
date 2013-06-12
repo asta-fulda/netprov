@@ -1,0 +1,74 @@
+This is netprov, a network configuration provisioning utility.
+
+
+I. About
+========
+netprov is used to generate configuration files for network daemons out of a
+network management software.
+
+
+II. Concepts
+============
+netprov reads a configuration file on startup containing mappings between
+sources and target files.
+
+A source is a named provider for network information, like available subnets and
+configured IP addresses. The source is configured globally and utilizes a single
+network management system.
+
+A mapping is configured for a target file path. To generate the content of the
+file, a source and a formatter must be configured for the mapping.
+
+During the program run, the source configured for a mapping is passed to the
+formatter which generates the file content. After the run, the old content of
+the files is compared to the new ones. If the content differs, a configurable
+action can be triggered.
+
+
+III. Installation
+=================
+See INSTALL.
+
+
+IV. Licensing
+=============
+See LICENSE.
+
+
+V. Usage
+========
+The program is intended to be called on a regular interval, i.e. using cron.
+
+The configuration file to use can be specified as a command line parameter. If
+no file is specified, the file /etc/netprov.conf will be used.
+
+
+VI. Configuration
+=================
+The configuration is specified in a file using the JSON format. For a detailed
+specification see JSON web site ( http://json.org/ ).
+
+The configuration consists of two sections, the source section configuring all
+available sources and the mappings sections containing all the target files.
+
+The sources is a dictionary of the source name to the source configuration. The
+following elements are allowed in a source configuration:
+  class         the name of the source class
+  config        the configuration of the source
+
+The mapping is a dictionary of the target file and the mapping configuration. The
+following elements are allowed in a mapping configuration:
+  class          the name of the mapping class
+  source         the name of the source to utilize in the mapping
+  config         the configuration of the formatter
+  action         an optional action to trigger after a file change
+
+For an example of the configuration file, see netprov.conf.example.
+
+
+IV. Contacts
+============
+Further documentation, bug reports and feature requests are managed here:
+http://dev.open-desk.org/projects/netprov
+
+For the list of authors, see AUTHORS.
