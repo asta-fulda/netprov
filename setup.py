@@ -41,7 +41,7 @@ setuptools.setup(
 
     install_requires = [
         'bitarray >= 0.8.0',
-        'MySQL-python >= 1.2.4',
+        'MySQL-python >= 1.2.3',
     ],
 
     entry_points = {
