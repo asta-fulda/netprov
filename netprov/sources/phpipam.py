@@ -89,7 +89,7 @@ class PhpipamSource(Source):
                 r_hwaddr = r['hwaddr']
                 r_state = r['state']
 
-                if r_state == 1:
+                if r_state == 1 or r_state == 0:
                     entry = Entry.fixed(name = r_name,
                                         ipaddr = r_ipaddr)
                 elif r_state == 3:
