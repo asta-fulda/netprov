@@ -84,6 +84,10 @@ class Entry(object):
         return self.__hwaddr
 
 
+    def __cmp__(self, other):
+        return self.__ipaddr.address_int - other.__ipaddr.address_int
+
+
 
 class Address(object):
     def __init__(self, address):
@@ -169,9 +173,8 @@ class Subnet(object):
         return self.__fields
 
 
-    def __str__(self):
-        return '%s/%d' % (self.network,
-                          self.suffix)
+    def __cmp__(self, other):
+        return self.__network.address_int - other.__network.address_int
 
 
 

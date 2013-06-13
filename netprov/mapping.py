@@ -68,9 +68,12 @@ class Mapping(object):
             self.__generate__(f)
 
         md5_new = hashlib.md5()
-        with open(self.__path, 'rb') as f:
-            for chunk in iter(lambda: f.read(8192), b''):
-                md5_new.update(chunk)
+        try:
+            with open(self.__path, 'rb') as f:
+                for chunk in iter(lambda: f.read(8192), b''):
+                    md5_new.update(chunk)
+        except Exception as e:
+            md5_old.update(str(e))
 
         if md5_old.digest() != md5_new.digest():
             os.system(self.__action)

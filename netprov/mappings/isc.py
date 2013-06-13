@@ -39,13 +39,13 @@ class DhcpMapping(LineMapping):
         if has_config('max-lease-time'):
             yield 'max-lease-time {config[max-lease-time]};'.format(config = self.config)
 
-        for subnet, entries in self.subnets.iteritems():
+        for subnet, entries in sorted(self.subnets.iteritems()):
             # Search for consecutive DHCP ranges to build pools
             pools = [itemgetter(0, -1)(map(lambda (_, entry): entry.ipaddr.address_str,
                                            group))
                      for _, group
                      in groupby(enumerate(ifilter(lambda entry: entry.usage == 'dynamic',
-                                                  entries)),
+                                                  sorted(entries))),
                                 lambda (i, entry): i - entry.ipaddr.address_int)]
 
             # Yield subnet declaration
@@ -76,12 +76,12 @@ class DhcpMapping(LineMapping):
                 yield '  filename "{dhcp_tftp_file}";'.format(**subnet.fields)
 
             # Yield pool declarations
-            for pool in pools:
+            for pool in sorted(pools):
                 yield '  pool {{'.format(pool = pool)
                 yield '    range {pool[0]} {pool[1]};'.format(pool = pool)
                 yield '  }}'.format(pool = pool)
 
-            for entry in entries:
+            for entry in sorted(entries):
                 if entry.usage == 'static':
                     yield '  host {entry.name} {{ hardware ethernet {entry.hwaddr}; fixed-address {entry.ipaddr.address_str}; }}'.format(entry = entry)
 

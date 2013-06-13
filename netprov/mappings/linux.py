@@ -27,11 +27,11 @@ class HostsMapping(LineMapping):
         if 'localhost' in self.config and self.config['localhost']:
             yield '127.0.0.1 localhost'
 
-        for subnet, entries in self.subnets.iteritems():
+        for subnet, entries in sorted(self.subnets.iteritems()):
             if 'dns_domain' in subnet.fields and subnet.fields['dns_domain']:
                 domain = subnet.fields['dns_domain']
 
-            for entry in entries:
+            for entry in sorted(entries):
                 addr = entry.ipaddr.address_str
 
                 if domain:
