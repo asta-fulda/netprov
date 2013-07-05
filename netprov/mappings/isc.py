@@ -39,6 +39,9 @@ class DhcpMapping(LineMapping):
         if has_config('max-lease-time'):
             yield 'max-lease-time {config[max-lease-time]};'.format(config = self.config)
 
+        if has_config('use-host-decl-names'):
+            yield 'use-host-decl-names on;'
+
         for subnet, entries in sorted(self.subnets.iteritems()):
             # Search for consecutive DHCP ranges to build pools
             pools = [itemgetter(0, -1)(map(lambda (_, entry): entry.ipaddr.address_str,
