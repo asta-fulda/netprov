@@ -73,6 +73,7 @@ class DhcpMapping(LineMapping):
                 yield '  option routers {dhcp_router};'.format(**subnet.fields)
 
             if has_field('dhcp_tftp_server'):
+                yield '  option tftp-server-name {dhcp_tftp_server};'.format(**subnet.fields)
                 yield '  next-server {dhcp_tftp_server};'.format(**subnet.fields)
 
             if has_field('dhcp_tftp_file'):
